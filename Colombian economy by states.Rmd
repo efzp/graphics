@@ -1,0 +1,33 @@
+---
+title: "Colombian economy by states"
+author: "Eduardo Zamudio"
+date: "2022-08-15"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(leaflet)
+```
+
+# GDP per Capita in the top10 cities
+
+```{r demograph, echo=FALSE, cache.comments=FALSE, comment=""}
+
+
+ciudades <- c("Casanare", "Bogotá D.C.","Meta","Santander","San Andrés, Providencia y Santa Catalina (Archipiélago)",
+              "Antioquia",
+              "Valle del Cauca","Boyacá","Cundinamarca","Arauca")
+pib_per_capita <- c(39240094, 38072721,36794616, 32094637,27235955, 26015246,
+                    25207339, 24609560, 21493669, 20944190)
+lat <- c(5.35012 ,4.60971, 4.142, 7.12539, 12.583, 6.25184, 3.43722, 	5.540278,
+         4.578056,	7.090278)
+lng <- c(-72.45210, -74.08175, -73.62664, -73.1198,-81.7,-75.56359,-76.5225, 
+         -73.361389,-74.214444,-70.761667)
+ciudades<- data.frame(ciudades,pib_per_capita,lat,lng)
+ciudades %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addCircles(weight = 1, radius = sqrt(ciudades$pib_per_capita)*10)
+```
